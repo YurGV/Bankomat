@@ -3,6 +3,8 @@ package com.atm;
 
 import com.atm.model.Atm;
 import com.atm.model.Card;
+import com.atm.service.AtmServiceImpl;
+import com.atm.service.CardServiceImpl;
 
 
 import java.io.*;
@@ -23,8 +25,8 @@ public class Main {
 //        System.out.println(card.getDateLockCard());
 //        System.out.println(card.getBalance());
 
-
 //        serialization(card);
+
         System.out.println("проверка ---------------------- ");
         Card card1 = deserialization();
         System.out.println(card1);
@@ -33,40 +35,17 @@ public class Main {
         //сумма в банкомате
         Atm atm = new Atm();
         atm.setMoneyLimit(BigDecimal.valueOf(5500.05));
-        inputWithdrawalCash(summa);
-        withdrawalCash(card1, summa, atm);
-        inputBalanceReplenishment(summa);
-        System.out.println("Останок средств: " + card1.getBalance());
+        //inputWithdrawalCash(summa);
+        CardServiceImpl cardService = new CardServiceImpl();
+        AtmServiceImpl atmService = new AtmServiceImpl();
+        summa = AtmServiceImpl.inputWithdrawalCash();
+        CardServiceImpl.withdrawalCash(card1, summa, atm);
+        summa = AtmServiceImpl.inputBalanceReplenishment();
+        CardServiceImpl.balanceReplenishment(card1,summa);
+
 
     }
 
-    private static void withdrawalCash(Card card1, BigDecimal summa, Atm atm) throws IOException {
-        //проверка средств на карте и лимита в банкомате
-        if ((atm.getMoneyLimit().compareTo(summa) >= 0) && (card1.getBalance().compareTo(summa) >= 0) ) {
-            card1.setBalance(card1.getBalance().subtract(summa));
-            System.out.println("Операция прошла успешно");
-            System.out.println("Остаток средств на карте: " + card1.getBalance());
-        }
-        else System.out.println("Сумма недоступна");
-
-    }
-
-
-    public static BigDecimal inputWithdrawalCash(BigDecimal summa) throws IOException {
-        //сумма которую мы хотим снять
-        System.out.print("Введите сумму для выдачи наличных: ");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String sum = reader.readLine();
-        return BigDecimal.valueOf(Double.parseDouble(sum));
-    }
-
-    public static BigDecimal inputBalanceReplenishment(BigDecimal summa) throws IOException {
-        //сумма которую мы хотим положить на счёт
-        System.out.print("Введите сумму для пополнения счёта: ");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String sum = reader.readLine();
-        return BigDecimal.valueOf(Double.parseDouble(sum));
-    }
 
     private static void serialization(Card card) throws IOException {
         //FileOutputStream outputStream = new FileOutputStream("E:\\save.ser");
