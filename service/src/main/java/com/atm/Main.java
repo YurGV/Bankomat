@@ -10,13 +10,15 @@ import com.atm.service.CardServiceImpl;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
 
-//        Card card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", false, new Date(1212121212121L));
+        Card card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", false, new GregorianCalendar(2020, 0, 25) {});
 //
 //
 //        FileInputStream inputStream = new FileInputStream("e:/data.txt");
@@ -26,12 +28,13 @@ public class Main {
 //        System.out.println(formater.format(date));
 //        System.out.println(card);
 //        System.out.println(card.getDateLockCard());
-//        System.out.println(card.getBalance());
-
-//       serialization(card);
+//        System.out.println(card.getBalance())
+//     serialization(card);
 //
+
+
         System.out.println("проверка ---------------------- ");
-        Card card = deserialization();
+        card = deserialization();
         System.out.println(card);
         BigDecimal summa = BigDecimal.valueOf(333.3);
 
@@ -42,10 +45,13 @@ public class Main {
         CardServiceImpl cardService = new CardServiceImpl();
         AtmServiceImpl atmService = new AtmServiceImpl();
 
-        card.setCardLockStatus(true);
+
+        //card.setCardLockStatus(true);
         //проверка pin
         cardService.checkPinCode(card);
         System.out.println("Lock status is " + card.getCardLockStatus());
+
+        System.out.println("Date " + card.getDateLockCard());
 
 
         //работает

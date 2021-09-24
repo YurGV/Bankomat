@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class CardServiceImpl implements CardService {
     @Override
@@ -57,6 +59,9 @@ public class CardServiceImpl implements CardService {
                     if (i == 3) {
                         System.out.println("Ваша карта заблокирована!");
                         card.setCardLockStatus(true);
+                        Calendar calendar = new GregorianCalendar();
+                        Date date = calendar.getTime();
+                        System.out.println("Дата блокировки карты: " + date);
                     }
                 }
             }

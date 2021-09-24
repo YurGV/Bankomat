@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.Calendar;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +18,7 @@ public class Card implements Serializable {
     private BigDecimal balance;
     private String pinCode;
     private Boolean cardLockStatus;
-    private Date dateLockCard;
+    private Calendar dateLockCard;
 
     @Override
     public String toString() {
