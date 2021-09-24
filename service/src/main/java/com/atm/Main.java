@@ -15,10 +15,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static <currentTime> void main(String[] args) throws IOException, ClassNotFoundException {
 
 
-        Card card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", false, new GregorianCalendar(2020, 0, 25) {});
+        Card card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", false, new GregorianCalendar(2021, 8, 23) {});
 //
 //
 //        FileInputStream inputStream = new FileInputStream("e:/data.txt");
@@ -33,22 +33,22 @@ public class Main {
 //
 
 
-        System.out.println("проверка ---------------------- ");
-        card = deserialization();
-        System.out.println(card);
-        BigDecimal summa = BigDecimal.valueOf(333.3);
+//        System.out.println("проверка ---------------------- ");
+//        card = deserialization();
+//        System.out.println(card);
+//        BigDecimal summa = BigDecimal.valueOf(333.3);
 
-        //сумма в банкомате
-        Atm atm = new Atm();
-        atm.setMoneyLimit(BigDecimal.valueOf(5500.05));
-
+//        //сумма в банкомате
+//        Atm atm = new Atm();
+//        atm.setMoneyLimit(BigDecimal.valueOf(5500.05));
+//
         CardServiceImpl cardService = new CardServiceImpl();
-        AtmServiceImpl atmService = new AtmServiceImpl();
-
-        if (checkNumberCard(card) && (cardService.checkPinCode(card))) {
-            System.out.println("oooooookkk!");
-
-        }
+//        AtmServiceImpl atmService = new AtmServiceImpl();
+//
+//        if (checkNumberCard(card) && (cardService.checkPinCode(card))) {
+//            System.out.println("oooooookkk!");
+//
+//        }
 
         //card.setCardLockStatus(true);
         //проверка pin
@@ -57,10 +57,19 @@ public class Main {
 
         System.out.println("Date " + card.getDateLockCard());
 
+        System.out.println("---------------------------------");
 
 
-
-
+       if (cardService.checkStatusCard(card)) {
+           System.out.println("*********************  Stop ****************************");
+       }
+       else {
+           System.out.println(" ******************* GO ****************************");
+           if ((cardService.checkNumberCard(card) && (cardService.checkPinCode(card)))) {
+           System.out.println("oooooookkk!");
+               System.out.println("Снять деньги ---> ");
+        }
+       }
 
         //работает
 //        summa = atmService.inputWithdrawalCash();
@@ -73,19 +82,9 @@ public class Main {
 
     }
 
-    private static Boolean checkNumberCard(Card card) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Введите номер карты: ");
-        String number = reader.readLine();
-        if (number.equals(card.getCardNumber())) {
-            System.out.println("Номер верный, теперь введите пин");
-            return true;
-        }
-        else {
-            System.out.println("Данной карты не существует");
-            return false;
-        }
-    }
+
+
+
 
 
     private static void serialization(Card card) throws IOException {

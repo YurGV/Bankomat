@@ -43,11 +43,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public Boolean checkPinCode(Card card) throws IOException {
-        if (card.getCardLockStatus()) {
-            System.out.println("Ваша карта заблокирована! Вы не можете её использовать! Ожидайте 1 день...");
-        }
-            else {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             for (int i = 1; i < 4; i++) {
                 System.out.println("Введите PIN-код :");
                 String pinCode = reader.readLine();
@@ -66,8 +62,39 @@ public class CardServiceImpl implements CardService {
                     }
                 }
             }
+        return false;
+    }
+    @Override
+    public Boolean checkNumberCard(Card card) throws IOException {
+        if (card.getCardLockStatus()) {
+            System.out.println("Ваша карта заблокирована! Вы не можете её использовать! Ожидайте 1 день...");
+        }
+        else {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print("Введите номер карты: ");
+            String number = reader.readLine();
+            if (number.equals(card.getCardNumber())) {
+                System.out.println("Номер верный, теперь введите пин");
+                return true;
+            }
+            else {
+                System.out.println("Данной карты не существует");
+                return false;
+            }
         }
         return false;
+    }
+
+    @Override
+    public Boolean checkStatusCard(Card card) {
+        Calendar currentTime = new GregorianCalendar();
+        currentTime.add(Calendar.DAY_OF_MONTH, -1);
+        if (currentTime.after(card.getDateLockCard())) {
+            System.out.println("Card unlock");
+            return false;
+        }
+        else System.out.println("Card Lock!!!");
+        return true;
     }
 
 

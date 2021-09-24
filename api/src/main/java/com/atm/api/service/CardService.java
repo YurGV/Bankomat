@@ -14,6 +14,8 @@ public interface CardService {
     void withdrawalCash(Card card, BigDecimal summa, Atm atm);
     void balanceReplenishment(Card card, BigDecimal summa);
     Boolean checkPinCode(Card card) throws IOException;
+    Boolean checkStatusCard(Card card);
+    Boolean checkNumberCard(Card card) throws IOException;
     void saveLockData(Calendar dataLock);
 
 }
