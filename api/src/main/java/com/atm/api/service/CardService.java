@@ -1,18 +1,20 @@
 package com.atm.api.service;
 
 
+import com.atm.model.Atm;
 import com.atm.model.Card;
 
-import javax.xml.crypto.Data;
+
 import java.math.BigDecimal;
+import java.util.Calendar;
 
 public interface CardService {
 
-    Card viewBalance(String cardNumber);
-    void withdrawalCash (BigDecimal quantity);
-    void balanceReplenishment (BigDecimal quantity);
+    void viewBalance(Card card);
+    void withdrawalCash(Card card, BigDecimal summa, Atm atm);
+    void balanceReplenishment(Card card, BigDecimal summa);
     void checkPinCode(Integer pinCode);
     void cardLock(Boolean cardLock);
-    void saveLockData(Data dataLock);
+    void saveLockData(Calendar dataLock);
 
 }
