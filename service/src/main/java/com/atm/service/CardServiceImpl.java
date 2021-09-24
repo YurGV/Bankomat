@@ -42,7 +42,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public void checkPinCode(Card card) throws IOException {
+    public Boolean checkPinCode(Card card) throws IOException {
         if (card.getCardLockStatus()) {
             System.out.println("Ваша карта заблокирована! Вы не можете её использовать! Ожидайте 1 день...");
         }
@@ -53,7 +53,7 @@ public class CardServiceImpl implements CardService {
                 String pinCode = reader.readLine();
                 if (pinCode.equals(card.getPinCode())) {
                     System.out.println("PIN ok! ");
-                    break;
+                    return true;
                 } else {
                     System.out.println("Неправильный PIN");
                     if (i == 3) {
@@ -62,10 +62,12 @@ public class CardServiceImpl implements CardService {
                         Calendar calendar = new GregorianCalendar();
                         Date date = calendar.getTime();
                         System.out.println("Дата блокировки карты: " + date);
+                        break;
                     }
                 }
             }
         }
+        return false;
     }
 
 

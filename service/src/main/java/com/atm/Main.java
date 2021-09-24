@@ -45,13 +45,21 @@ public class Main {
         CardServiceImpl cardService = new CardServiceImpl();
         AtmServiceImpl atmService = new AtmServiceImpl();
 
+        if (checkNumberCard(card) && (cardService.checkPinCode(card))) {
+            System.out.println("oooooookkk!");
+
+        }
 
         //card.setCardLockStatus(true);
         //проверка pin
-        cardService.checkPinCode(card);
+
         System.out.println("Lock status is " + card.getCardLockStatus());
 
         System.out.println("Date " + card.getDateLockCard());
+
+
+
+
 
 
         //работает
@@ -65,7 +73,19 @@ public class Main {
 
     }
 
-
+    private static Boolean checkNumberCard(Card card) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Введите номер карты: ");
+        String number = reader.readLine();
+        if (number.equals(card.getCardNumber())) {
+            System.out.println("Номер верный, теперь введите пин");
+            return true;
+        }
+        else {
+            System.out.println("Данной карты не существует");
+            return false;
+        }
+    }
 
 
     private static void serialization(Card card) throws IOException {
