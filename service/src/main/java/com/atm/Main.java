@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
 
-        Card card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", false, new Date(1212121212121L));
+//        Card card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", false, new Date(1212121212121L));
 //
 //
 //        FileInputStream inputStream = new FileInputStream("e:/data.txt");
@@ -28,10 +28,10 @@ public class Main {
 //        System.out.println(card.getDateLockCard());
 //        System.out.println(card.getBalance());
 
-       serialization(card);
+//       serialization(card);
 //
         System.out.println("проверка ---------------------- ");
-        card = deserialization();
+        Card card = deserialization();
         System.out.println(card);
         BigDecimal summa = BigDecimal.valueOf(333.3);
 
@@ -42,15 +42,24 @@ public class Main {
         CardServiceImpl cardService = new CardServiceImpl();
         AtmServiceImpl atmService = new AtmServiceImpl();
 
-        summa = atmService.inputWithdrawalCash();
-        cardService.withdrawalCash(card, summa, atm);
+        card.setCardLockStatus(true);
+        //проверка pin
+        cardService.checkPinCode(card);
+        System.out.println("Lock status is " + card.getCardLockStatus());
 
-        summa = atmService.inputBalanceReplenishment();
-        cardService.balanceReplenishment(card,summa);
 
-        cardService.viewBalance(card);
+        //работает
+//        summa = atmService.inputWithdrawalCash();
+//        cardService.withdrawalCash(card, summa, atm);
+//
+//        summa = atmService.inputBalanceReplenishment();
+//        cardService.balanceReplenishment(card,summa);
+//
+//        cardService.viewBalance(card);
 
     }
+
+
 
 
     private static void serialization(Card card) throws IOException {
