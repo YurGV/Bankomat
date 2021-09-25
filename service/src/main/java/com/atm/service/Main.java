@@ -1,3 +1,5 @@
+package com.atm.service;
+
 import com.atm.models.Atm;
 import com.atm.models.Card;
 

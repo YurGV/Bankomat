@@ -1,3 +1,5 @@
+package com.atm.service;
+
 import com.atm.api.service.AtmService;
 
 import java.io.BufferedReader;
