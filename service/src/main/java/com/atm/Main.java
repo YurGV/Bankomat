@@ -1,7 +1,5 @@
 package com.atm;
 
-
-import com.atm.api.service.CardService;
 import com.atm.model.Atm;
 import com.atm.model.Card;
 import com.atm.service.AtmServiceImpl;
@@ -30,10 +28,6 @@ public class Main {
        card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", true, new GregorianCalendar(2021, 8, 24) {});
 
        start(cardService, atmService, atm, card);
-
-
-      //  mainMenu(cardService, atmService, atm, card);
-
 
     }
 
