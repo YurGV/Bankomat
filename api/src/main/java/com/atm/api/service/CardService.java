@@ -6,7 +6,7 @@ import com.atm.model.Card;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Calendar;
+
 
 public interface CardService {
 
@@ -16,6 +16,5 @@ public interface CardService {
     Boolean checkPinCode(Card card) throws IOException;
     Boolean checkStatusCard(Card card);
     Boolean checkNumberCard(Card card) throws IOException;
-    void saveLockData(Calendar dataLock);
 
 }

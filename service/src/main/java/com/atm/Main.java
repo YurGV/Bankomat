@@ -10,58 +10,88 @@ import com.atm.service.CardServiceImpl;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
 
 public class Main {
     public static <currentTime> void main(String[] args) throws IOException, ClassNotFoundException {
 
 
 //        Card card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", false, new GregorianCalendar(2021, 8, 23) {});
-        Card card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", true, new GregorianCalendar(2021, 8, 24) {});
-//
-//        FileInputStream inputStream = new FileInputStream("e:/data.txt");
-//        SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        Date date = new Date(1212121212131L);
-//        System.out.println(date);
-//        System.out.println(formater.format(date));
-//        System.out.println(card);
-//        System.out.println(card.getDateLockCard());
-//        System.out.println(card.getBalance())
-//     serialization(card);
-//
-
-
-//        System.out.println("проверка ---------------------- ");
-//        card = deserialization();
-//        System.out.println(card);
-        BigDecimal summa;
-
-        //сумма в банкомате
-        Atm atm = new Atm();
-        atm.setMoneyLimit(BigDecimal.valueOf(5500.05));
+ //       Card card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", true, new GregorianCalendar(2021, 8, 24) {});
 
         CardServiceImpl cardService = new CardServiceImpl();
         AtmServiceImpl atmService = new AtmServiceImpl();
+        Atm atm = new Atm();
+        atm.setMoneyLimit(BigDecimal.valueOf(5500.05)); //сумма в банкомате
+        BigDecimal summa;
+        Card card;
+
+       card = new Card("1234-5678-0011-9910", BigDecimal.valueOf(5000.05), "0123", true, new GregorianCalendar(2021, 8, 24) {});
+
+       start(cardService, atmService, atm, card);
 
 
-//        card.setCardLockStatus(true);
+      //  mainMenu(cardService, atmService, atm, card);
 
 
+    }
 
-           System.out.println(" ******************* GO ****************************");
-           if ((cardService.checkNumberCard(card) && (cardService.checkPinCode(card)))) {
-           System.out.println("oooooookkk!");
-               System.out.println("Проверить баланс ---> ");
-           cardService.viewBalance(card);
-               System.out.println("Снять деньги ---> ");
-              summa = atmService.inputBalanceReplenishment();
-           cardService.withdrawalCash(card, summa, atm);
-               System.out.println("Положить деньги ---> ");
-               summa = atmService.inputBalanceReplenishment();
-               cardService.balanceReplenishment(card, summa);
+    private static void mainMenu(CardServiceImpl cardService, AtmServiceImpl atmService, Atm atm, Card card) throws IOException, ClassNotFoundException {
+        BigDecimal summa;
+        boolean work = true;
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Введите № операции: ");
+            System.out.println("1. Проверить баланс");
+            System.out.println("2. Снять наличные");
+            System.out.println("3. Пополнить счёт");
+            System.out.println("4. Завершить работу");
+
+            int operation = scanner.nextInt();
+
+            switch (operation) {
+                case 1:
+                    cardService.viewBalance(card);
+                    break;
+
+                case 2: {
+                    summa = atmService.inputWithdrawalCash();
+                    cardService.withdrawalCash(card, summa, atm);
+                }
+                break;
+                case 3: {
+                    summa = atmService.inputBalanceReplenishment();
+                    cardService.balanceReplenishment(card, summa);
+                }
+                break;
+                case 4: {
+                    work = false;
+                }
+                break;
+                default:
+                    System.out.println("Вы ввели неправильный номер. Выберите пункт:");
             }
+            if (work) {
+                mainMenu(cardService, atmService, atm, card);
+            }
+            else {
+                System.out.println("Конец работы!");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void start(CardServiceImpl cardService, AtmServiceImpl atmService, Atm atm, Card card) throws IOException, ClassNotFoundException {
+        BigDecimal summa;
+        System.out.println(" ******************* Start ****************************");
+        card = deserialization();
+
+        if ((cardService.checkNumberCard(card) && (cardService.checkPinCode(card)))) {
+            mainMenu(cardService, atmService, atm, card);
+            }
+        serialization(card);
     }
 
 

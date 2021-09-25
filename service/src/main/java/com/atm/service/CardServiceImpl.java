@@ -42,6 +42,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    //проверка пин-кода и блокировка в случаи 3 неверных попыток
     public Boolean checkPinCode(Card card) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             for (int i = 1; i < 4; i++) {
@@ -57,6 +58,7 @@ public class CardServiceImpl implements CardService {
                         card.setCardLockStatus(true);
                         Calendar calendar = new GregorianCalendar();
                         Date date = calendar.getTime();
+                        card.setDateLockCard(calendar);
                         System.out.println("Дата блокировки карты: " + date);
                         break;
                     }
@@ -100,12 +102,5 @@ public class CardServiceImpl implements CardService {
         else System.out.println("Ваша карта заблокирована! Вы не можете её использовать! Ожидайте 1 день...");
         return true;
     }
-
-
-    @Override
-    public void saveLockData(Calendar dataLock) {
-
-    }
-
 
 }
