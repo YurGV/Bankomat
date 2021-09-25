@@ -9,9 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="model" />
         <module name="api" />
-        <module name="ui" />
         <module name="service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ui" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
